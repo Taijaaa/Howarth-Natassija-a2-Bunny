@@ -1,4 +1,4 @@
-﻿// Include the namespaces (code libraries) you need below.
+// Include the namespaces (code libraries) you need below.
 using System;
 using System.Globalization;
 using System.Numerics;
@@ -21,8 +21,10 @@ namespace MohawkGame2D
         Color SkyBlue = new Color("cfe2f3");
         Color NoseBrown = new Color("574332");
         Color Black = new Color("000000");
-        
 
+        private Vector2[] rainDrops = new Vector2[] {new Vector2(-60,0), new Vector2(-20,0), new Vector2(5,0), new Vector2(50,0) };
+        
+        
         /// <summary>
         ///     Setup runs once before the game loop begins.
         /// </summary>
@@ -41,6 +43,20 @@ namespace MohawkGame2D
         {
             //Draw sky
             Window.ClearBackground(SkyBlue);
+            
+            // draw sun
+            Draw.FillColor = SunYellow;
+            Draw.Circle(380, 30, 60);
+            
+            // Draw a circle at mouse position
+            Draw.FillColor = Color.LightGray;;
+            Draw.LineColor = Color.LightGray;;
+            Draw.Ellipse(Input.GetMouseX(), Input.GetMouseY(), 100, 90);
+            
+            // Draw an ellipse at mouse position
+            Draw.FillColor = Color.LightGray;
+            Draw.LineColor = Color.LightGray;
+            Draw.Ellipse(Input.GetMouseX(), Input.GetMouseY(), 170, 65 );
             
             // draw bunny
             
@@ -101,15 +117,42 @@ namespace MohawkGame2D
             Draw.FillColor = GreyCloud;
             Draw.Circle(245, 170, 8);
             
+            
+            //Draw ground
+            
+            Draw.FillColor = GreenGrass;
+            Draw.Rectangle(0 ,265,600, 400);
+            
             //Draw feet
             
             Draw.FillColor = BunnyBody;
-            Draw.Ellipse(230,260,40, 20);
+            Draw.Ellipse(225,260,40, 20);
             
             Draw.FillColor = BunnyBody;
-            Draw.Ellipse(170,260,40, 20);
+            Draw.Ellipse(175,260,40, 20);
             
-            //
+            // draw sun
+            Draw.FillColor = SunYellow;
+            Draw.Circle(380, 30, 60);
+
+            
+            {
+                // Draw rain
+                Vector2 mousePosition = Input.GetMousePosition();
+                DrawRaindrops(mousePosition);
+            }
+        }
+        
+        
+
+        public void DrawRaindrops(Vector2 position)
+        {
+            Draw.FillColor = Rainblue;
+            for (int i = 0; i < rainDrops.Length; i++)
+            {
+                rainDrops[i] = rainDrops[i] + Vector2.UnitY;
+                Draw.Circle(position + rainDrops[i], 5);
+            }
         }
     }
 
